@@ -74,37 +74,45 @@ li {
   margin: 10px;
 }
 
-.tweet {
+.poll {
   width: 100%;
   max-width: 590px;
   padding: 10px;
   display: flex;
   margin: 0 auto;
   border: 1px solid #dad7d7;
-  border-radius: 3px;
+  border-radius: 20px;
   cursor: pointer;
 }
 
-.tweet-info {
+.poll-info {
   margin: 10px;
   display: flex;
   flex-direction: column;
 }
+.poll-title {
+  text-align: center;
+}
+.poll-question {
+  float: left;
+  position: relative;
+  padding: 20px;
+}
 
 /* Hacky but less typing in the video */
-.tweet-info > div > span:first-child {
+.poll-info > div > span:first-child {
   font-weight: bold;
   margin-right: 5px;
 }
-.tweet-info > div > span:nth-child(2) {
+.poll-info > div > span:nth-child(2) {
   color: #969696;
   font-size: 16px;
 }
-.tweet-info > div > div {
+.poll-info > div > div {
   color: #969696;
   font-size: 15px;
 }
-.tweet-info > div > p {
+.poll-info > div > p {
   font-size: 18px;
   margin: 10px 0;
 }
