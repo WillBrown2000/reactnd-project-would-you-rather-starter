@@ -184,7 +184,7 @@ export function _saveQuestionAnswer ({ authedUser, qid, answer }) {
           }
         }
       }
-
+      console.log ('questions from _DATA.js: ', {...questions})
       questions = {
         ...questions,
         [qid]: {
@@ -195,6 +195,8 @@ export function _saveQuestionAnswer ({ authedUser, qid, answer }) {
           }
         }
       }
+
+      console.log('questions from _DATA.js after setting questions: ', {...questions})
 
       res()
     }, 500)

@@ -4,21 +4,19 @@ import TiArrowBackOutline from 'react-icons/lib/ti/arrow-back-outline'
 import TiHeartOutline from 'react-icons/lib/ti/heart-outline'
 import TiHeartFullOutline from 'react-icons/lib/ti/heart-full-outline'
 import { Link, withRouter } from 'react-router-dom'
+import { handleVoteOnQuestion } from '../actions/questions'
 
 class Question extends Component {
   handleVote = (e) => {
     e.preventDefault()
 
-    console.log('vote handled!')
-    console.log('props are: ',this.props)
+    const { dispatch, question, authedUser } = this.props
 
-    // const { dispatch, tweet, authedUser } = this.props
-
-    // dispatch(handleToggleTweet({
-    //   id: tweet.id,
-    //   hasLiked: tweet.hasLiked,
-    //   authedUser
-    // }))
+    dispatch(handleVoteOnQuestion({
+      answer: 'optionOne', //question.answer,
+      qid: 'loxhs1bqm25b708cmbf3g', // question.id,
+      authedUser: 'tylermcginnis'
+    }))
   }
 
   render() {
@@ -46,11 +44,11 @@ class Question extends Component {
   }
 }
 
-function mapStateToProps ({questions}, ownProps) {
-  console.log('questions in mapStateToProps', questions)
+function mapStateToProps (state) {
+  console.log('state in mapStateToProps', state)
 
   return {
-    questions,
+    state,
   }
 }
 

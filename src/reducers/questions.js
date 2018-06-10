@@ -1,19 +1,27 @@
-import { VOTE_ON_QUESTION } from '../actions/polls'
-import {RECEIVE_QUESTIONS} from '../actions/polls'
+import { VOTE_ON_QUESTION } from '../actions/questions'
+import {RECEIVE_QUESTIONS} from '../actions/questions'
 
-export default function tweets (state = {}, action) {
+export default function questions (state = {}, action) {
   switch(action.type) {
     case VOTE_ON_QUESTION :
 
-      console.log('state', state)
+      const { answer, qid, authedUser } = action
 
-      const { option, questionID, user } = action
-
-      state = state[questionID].option.votes.concat(user)
+      let newQuestionState = {
+        [qid] : {
+             ...state[qid],
+             [answer]: {
+               ...state[qid][answer],
+               votes: state[qid][answer].votes.concat(authedUser)
+          }
+        }
+      }
 
       return {
-        ...state
+        ...state,
+        ...newQuestionState,
       }
+
     case RECEIVE_QUESTIONS :
 
       console.log('passing state through reducer')
