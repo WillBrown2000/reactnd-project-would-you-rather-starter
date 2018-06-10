@@ -1,4 +1,5 @@
 import { VOTE_ON_QUESTION } from '../actions/polls'
+import {RECEIVE_QUESTIONS} from '../actions/polls'
 
 export default function tweets (state = {}, action) {
   switch(action.type) {
@@ -12,6 +13,14 @@ export default function tweets (state = {}, action) {
 
       return {
         ...state
+      }
+    case RECEIVE_QUESTIONS :
+
+      console.log('passing state through reducer')
+
+      return {
+        ...state,
+        ...action.questions,
       }
 
     default :
