@@ -16,9 +16,17 @@ class App extends Component {
   }
   render() {
     return (
-      <div>
-        <Poll />
-      </div>
+      <Router>
+        <Fragment>
+            <div className='container'>
+              {this.props.loading === true
+                ? null
+                : <div>
+                    <Poll />
+                  </div>}
+            </div>
+        </Fragment>
+      </Router>
     )
   }
 }

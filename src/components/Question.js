@@ -22,7 +22,7 @@ class Question extends Component {
   render() {
     const { questions, question } = this.props
 
-    console.log('questions', questions)
+    console.log('questions in Question.js', questions)
 
     return (
       <div className='poll-question'>
