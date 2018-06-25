@@ -2,9 +2,9 @@ import { getInitialData } from '../utils/api'
 import { receiveQuestions } from '../actions/questions'
 import { receiveUsers } from '../actions/users'
 import { showLoading, hideLoading } from 'react-redux-loading'
-import { setAuthedUser } from '../actions/authedUser'
+import { setAuthedUser, setLoginStatus } from '../actions/authedUser'
 
-const AUTHED_ID = 'tylermcginnis' // TODO replace with authedUser from login page.
+const AUTHED_ID = 'loading'
 
 export function handleInitialData () {
   return (dispatch) => {
@@ -15,6 +15,7 @@ export function handleInitialData () {
         dispatch(receiveUsers(users))
         dispatch(setAuthedUser(AUTHED_ID))
         dispatch(hideLoading())
+        dispatch(setLoginStatus(false))
       })
   }
 }

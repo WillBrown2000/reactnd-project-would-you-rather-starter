@@ -15,7 +15,7 @@ class Question extends Component {
     dispatch(handleVoteOnQuestion({
       answer: 'optionOne', //question.answer,
       qid: 'loxhs1bqm25b708cmbf3g', // question.id,
-      authedUser: 'tylermcginnis'
+      authedUser: ''
     }))
   }
 
@@ -35,7 +35,7 @@ class Question extends Component {
           <TiArrowBackOutline className='tweet-icon' />
           <span>VOTES</span>
           <button className='heart-button' onClick={this.handleVote}>
-            <TiHeartOutline className='tweet-icon'/>}
+            <TiHeartOutline className='tweet-icon'/>
           </button>
           <span>%</span>
         </div>

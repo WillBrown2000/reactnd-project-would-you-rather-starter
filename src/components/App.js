@@ -9,12 +9,18 @@ import { connect } from 'react-redux'
 
 import { handleInitialData } from '../actions/shared'
 import Poll from './Poll'
+import Login from './Login'
+import QuestionList from './QuestionList'
 
 class App extends Component {
+
   componentDidMount() {
     this.props.dispatch(handleInitialData())
+
   }
   render() {
+
+    console.log('rendering app')
     return (
       <Router>
         <Fragment>
@@ -22,7 +28,9 @@ class App extends Component {
               {this.props.loading === true
                 ? null
                 : <div>
-                    <Poll />
+                    <Route path='/' exact component={Login} />
+                    <Route path='/questions/' component={QuestionList} />
+                    <Route path='/poll' component={Poll} />
                   </div>}
             </div>
         </Fragment>
