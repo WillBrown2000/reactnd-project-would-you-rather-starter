@@ -1,43 +1,33 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import TiArrowBackOutline from 'react-icons/lib/ti/arrow-back-outline'
-import TiHeartOutline from 'react-icons/lib/ti/heart-outline'
-import TiHeartFullOutline from 'react-icons/lib/ti/heart-full-outline'
-import { Link, withRouter } from 'react-router-dom'
-import { handleVoteOnQuestion } from '../actions/questions'
+import { Redirect } from 'react-router-dom'
 
 class Question extends Component {
-  handleVote = (e) => {
-    e.preventDefault()
 
-    const { dispatch, question, authedUser } = this.props
+  state = {
+    clicked: 'false',
+  }
 
-    dispatch(handleVoteOnQuestion({
-      answer: 'optionOne', //question.answer,
-      qid: 'loxhs1bqm25b708cmbf3g', // question.id,
-      authedUser: ''
-    }))
+  handleClick = () => {
+
+    this.setState({
+      clicked: true
+    })
   }
 
   render() {
-    const { questions, question } = this.props
-
-    console.log('questions in Question.js', questions)
+    const { id , questions } = this.props
+    const { author, optionOne, optionTwo, timestamp } = questions[id]
+    const { clicked } = this.state
 
     return (
-      <div className='poll-question'>
-        <div>
-        {question === undefined ?
-          'Whoops! It looks like there was no question entered here.':
-          question }
-        </div>
-        <div className='tweet-icons'>
-          <TiArrowBackOutline className='tweet-icon' />
-          <span>VOTES</span>
-          <button className='heart-button' onClick={this.handleVote}>
-            <TiHeartOutline className='tweet-icon'/>
-          </button>
-          <span>%</span>
+      <div>
+        {(clicked === true) ? <Redirect to={'/question/' + id} /> : <div></div>}
+        <div onClick={this.handleClick} className='poll' id='extra-padding'> Written by {author}
+          <div className='poll-question'>
+            <li>Question one: {optionOne.text}</li>
+            <li>Question two: {optionTwo.text}</li>
+          </div>
         </div>
       </div>
     )
@@ -45,10 +35,11 @@ class Question extends Component {
 }
 
 function mapStateToProps (state) {
-  console.log('state in mapStateToProps', state)
 
   return {
     state,
+    questions: state.questions,
+    authedUser: state.authedUser,
   }
 }
 

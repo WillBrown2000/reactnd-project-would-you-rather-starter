@@ -1,37 +1,44 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import TiArrowBackOutline from 'react-icons/lib/ti/arrow-back-outline'
-import TiHeartOutline from 'react-icons/lib/ti/heart-outline'
-import TiHeartFullOutline from 'react-icons/lib/ti/heart-full-outline'
-import { Link, withRouter, Redirect } from 'react-router-dom'
-import { handleVoteOnQuestion } from '../actions/questions'
+import { Redirect } from 'react-router-dom'
+import Question from './Question'
 
 class QuestionList extends Component {
 
-
   render() {
 
-    const { authedUser ,loading, loggedIn } = this.props
+    const { authedUser, loggedIn, questions, questionIds, title } = this.props
 
-    if (this.props.loggedIn === false) {
-      return <Redirect to='/' />
+    console.log('QuestionList this object', this)
+
+    if (loggedIn === false || authedUser === null) {
+      return <Redirect to='/login' />
     }
 
     return (
-      <div className='poll-question'>
-        This is a question list
+      <div>
+        <div className='new-question'>{title}</div>
+          {
+            this.props.questionMapper(questionIds, questions, authedUser).map((id) => (
+              <div>
+                <Question key={id + '1'} id={id}/>
+              </div>
+            ))
+          }
       </div>
     )
   }
 }
 
 function mapStateToProps (state) {
-  console.log('state in mapStateToProps', state)
 
   return {
-    state,
+    authedUser: state.authedUser,
+    questionIds: Object.keys(state.questions)
+      .sort((a,b) => state.questions[b].timestamp - state.questions[a].timestamp),
     loading: state.authedUser === null,
-    loggedIn: state.loggedIn
+    loggedIn: state.loggedIn,
+    questions: state.questions,
   }
 }
 

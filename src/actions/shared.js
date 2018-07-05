@@ -4,7 +4,7 @@ import { receiveUsers } from '../actions/users'
 import { showLoading, hideLoading } from 'react-redux-loading'
 import { setAuthedUser, setLoginStatus } from '../actions/authedUser'
 
-const AUTHED_ID = 'loading'
+const AUTHED_ID = 'loaded'
 
 export function handleInitialData () {
   return (dispatch) => {

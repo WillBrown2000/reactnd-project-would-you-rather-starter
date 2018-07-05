@@ -66,6 +66,7 @@ li {
   list-style-type: none;
   padding: 10px;
   text-decoration: none;
+  font-family: sans-serif;
 }
 
 .avatar {
@@ -147,7 +148,7 @@ li {
   border: none;
 }
 
-.new-tweet {
+.new-question {
   width: 100%;
   max-width: 590px;
   margin: 0 auto;
@@ -169,6 +170,6 @@ li {
   font-size: 20px;
   color: #C3392A;
 }
-.extra-padding-right {
-  padding-right: 20px;
+.extra-padding {
+  padding: 50px;
 }

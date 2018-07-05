@@ -1,20 +1,32 @@
 // import { saveLikeToggle, saveTweet } from '../utils/api'
-import { showLoading, hideLoading } from 'react-redux-loading'
-import { saveQuestionAnswer } from '../utils/api'
+import { saveQuestionAnswer, saveQuestion } from '../utils/api'
 
 export const GET_QUESTIONS = 'GET_QUESTIONS'
 export const INCREMENT_QUESTION = 'INCREMENT_QUESTION'
-export const ADD_POLL= 'ADD_POLL'
+export const ADD_QUESTION= 'ADD_QUESTION'
 export const VOTE_ON_QUESTION = 'VOTE_ON_QUESTION'
 export const RECEIVE_QUESTIONS = 'RECEIVE_QUESTIONS'
 
-export function addPoll (poll) {
-  return {
-    type: ADD_POLL,
-    poll,
+export function handleAddQuestion ({optionOneText, optionTwoText, author}) {
+  return (dispatch, getState) => {
+    const { authedUser } = getState()
+
+    console.log('optionOneText: ', optionOneText)
+
+    return saveQuestion({
+      optionOneText,
+      optionTwoText,
+      author: authedUser
+    })
+      .then((question) => dispatch(addQuestion(question)))
   }
 }
-
+function addQuestion (question) {
+  return {
+    type: ADD_QUESTION,
+    question,
+  }
+}
 export function receiveQuestions (questions) {
   return {
     type: RECEIVE_QUESTIONS,

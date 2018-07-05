@@ -1,20 +1,16 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import TiArrowBackOutline from 'react-icons/lib/ti/arrow-back-outline'
-import TiHeartOutline from 'react-icons/lib/ti/heart-outline'
-import TiHeartFullOutline from 'react-icons/lib/ti/heart-full-outline'
-import { Link, withRouter, Redirect } from 'react-router-dom'
+import { Redirect } from 'react-router-dom'
 import { setAuthedUser, setLoginStatus} from '../actions/authedUser.js'
-import { handleVoteOnQuestion } from '../actions/questions'
 
 class Login extends Component {
   state = {
-    selectedUser: '',
+    selectedUser: null,
     loggedIn: false
   }
 
   componentDidMount() {
-    this.setState({selectedUser: ''})
+    this.setState({selectedUser: null})
   }
 
   handleChange = (e) => {
@@ -25,15 +21,17 @@ class Login extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault()
-    const { dispatch, question, authedUser } = this.props
+    const { dispatch } = this.props
     dispatch(setAuthedUser(this.state.selectedUser))
     dispatch(setLoginStatus(true))
   }
 
   render() {
 
+
+
     if (this.props.loggedIn === true) {
-      return <Redirect to='/questions' />
+      return <Redirect to='/unanswered-questions' />
     }
 
     return (
@@ -46,15 +44,15 @@ class Login extends Component {
         <form onSubmit={this.handleSubmit}>
           <div className='poll'>
             <label className='poll-title extra-padding-right'>Username</label>
-            <select value={this.state.value} onChange={this.handleChange}>
-              <option value="null">Please select a user...</option>
+            <select value={this.state.value} defaultValue='Please select a user...' onChange={this.handleChange}>
+              <option value={null} disabled>Please select a user...</option>
               <option value='johndoe'>johndoe</option>
               <option value='sarahedo'>sarahedo</option>
               <option value='tylermcginnis' >tylermcginnis</option>
             </select>
           </div>
           <hr />
-          <input type="submit" value="Log In" />
+          <input type="submit" value="Log In" disabled={this.state.selectedUser===null} />
         </form>
       </div>
     )
