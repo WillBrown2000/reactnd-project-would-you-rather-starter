@@ -11,8 +11,6 @@ export function handleAddQuestion ({optionOneText, optionTwoText, author}) {
   return (dispatch, getState) => {
     const { authedUser } = getState()
 
-    console.log('optionOneText: ', optionOneText)
-
     return saveQuestion({
       optionOneText,
       optionTwoText,

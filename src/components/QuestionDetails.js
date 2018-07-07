@@ -1,17 +1,10 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom'
-import { handleVoteOnQuestion} from '../actions/questions.js'
+import { handleVoteOnQuestion} from '../actions/questions'
+import { addVote } from '../actions/users'
 
 class QuestionDetails extends Component {
-  state = {
-    selectedUser: null,
-    loggedIn: false
-  }
-
-  componentDidMount() {
-    this.setState({selectedUser: null})
-  }
 
   getUserSelectedAnswer(question) {
     const {authedUser} = this.props
@@ -27,7 +20,13 @@ class QuestionDetails extends Component {
     const { dispatch, authedUser } = this.props
     const qid = this.props.match.params.question_id
     const answer = 'optionOne'
+    const voteInfo = Object.assign({}, {
+      'authedUser': authedUser,
+      'vote': {}
+    })
+    voteInfo['vote'][qid] = answer
     dispatch(handleVoteOnQuestion({authedUser, qid, answer}))
+    dispatch(addVote(voteInfo))
   }
 
   handleOptionTwoClick = (e) => {
@@ -35,14 +34,24 @@ class QuestionDetails extends Component {
     const { dispatch, authedUser } = this.props
     const qid = this.props.match.params.question_id
     const answer = 'optionTwo'
+    const voteInfo = Object.assign({}, {
+      'authedUser': authedUser,
+      'vote': {}
+    })
+    voteInfo['vote'][qid] = answer
     dispatch(handleVoteOnQuestion({authedUser, qid, answer}))
+    dispatch(addVote(voteInfo))
   }
 
   render() {
-    console.log('params', this.props.match.params)
-    console.log('questions in QuestionDetails', questions)
+
     const { loggedIn, authedUser, questions, users } = this.props
     const { question_id } = this.props.match.params
+
+    if (questions[question_id] === undefined) return (
+      <div> 404 not found.  Please log in. </div>
+    )
+
     const { author, optionOne, optionTwo, timestamp } = questions[question_id]
     const optionOneVotes = questions[question_id].optionOne.votes.length
     const optionTwoVotes = questions[question_id].optionTwo.votes.length
@@ -51,37 +60,34 @@ class QuestionDetails extends Component {
       return <Redirect to='/login' />
     }
 
-    console.log('Logged In ', loggedIn)
-    console.log('authedUser ', authedUser)
-    console.log('questions', users[author])
-
-
     return (
-
       <div className='poll'>
         <div className='center'> Would You Rather?</div>
-        <div className='poll-question'>
+        <div className=''>
           <img
             src={users[author].avatarURL}
             alt={`users[author].id`}
             className='avatar '
           />
-          <div className='poll-info'>
-            <div onClick={this.handleOptionOneClick}>{optionOne.text}?</div>
-            {(this.getUserSelectedAnswer(questions[question_id]) === 'optionOne'
-              ? <div>  your answer </div>
-              : <div></div>
-              )}
-            <div> Votes: {optionOneVotes} </div>
-            <div> Percentage: {optionOneVotes/(optionOneVotes + optionTwoVotes) * 100}% </div>
-            <div onClick={this.handleOptionTwoClick}>{optionTwo.text}?</div>
-            {(this.getUserSelectedAnswer(questions[question_id]) === 'optionTwo'
-              ? <div>  your answer </div>
-              : <div></div>
-              )}
-            <div> Votes: {optionTwoVotes} </div>
-            <div> Percentage: {optionTwoVotes/(optionOneVotes + optionTwoVotes) * 100}% </div>
-
+          <div>
+            <div className='poll-question'>
+              <div onClick={this.handleOptionOneClick}>{optionOne.text}?</div>
+              {(this.getUserSelectedAnswer(questions[question_id]) === 'optionOne'
+                ? <div className='user-answer'> You answered  </div>
+                : <div></div>
+                )}
+              <div className='votes'> Votes: {optionOneVotes} </div>
+              <div className='percentage'> Percentage: {optionOneVotes/(optionOneVotes + optionTwoVotes) * 100}% </div>
+            </div>
+            <div className='poll-question'>
+              <div onClick={this.handleOptionTwoClick}>{optionTwo.text}?</div>
+              {(this.getUserSelectedAnswer(questions[question_id]) === 'optionTwo'
+                ? <div className='user-answer'> You answered  </div>
+                : <div></div>
+                )}
+              <div className='votes'> Votes: {optionTwoVotes} </div>
+              <div className='percentage'> Percentage: {optionTwoVotes/(optionOneVotes + optionTwoVotes) * 100}% </div>
+            </div>
           </div>
         </div>
       </div>

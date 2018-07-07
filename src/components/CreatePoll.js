@@ -8,12 +8,13 @@ class CreatePoll extends Component {
   state = {
     optionOneText: '',
     optionTwoText: '',
+    submitted: false,
   }
 
   handleChange1 = (e) => {
     const optionOneText = e.target.value
 
-    console.log('from handlechange,', optionOneText)
+    console.log('from handlechange,', this.state.optionOneText)
 
     this.setState(() => ({
       optionOneText
@@ -22,7 +23,7 @@ class CreatePoll extends Component {
   handleChange2 = (e) => {
     const optionTwoText = e.target.value
 
-    console.log('from handlechange,', optionTwoText)
+    console.log('from handlechange,', this.state.optionTwoText)
 
     this.setState(() => ({
       optionTwoText
@@ -33,22 +34,28 @@ class CreatePoll extends Component {
     const { dispatch, authedUser } = this.props
     const { optionOneText, optionTwoText } = this.state
 
-
+    console.log('click')
 
     dispatch(handleAddQuestion({optionOneText: optionOneText, optionTwoText: optionTwoText, author: authedUser}))
 
     this.setState(() => ({
       optionOneText: '',
-      optionTwoText: ''
+      optionTwoText: '',
+      submitted: true,
     }))
   }
 
   render() {
 
-    const { loggedIn, authedUser, optionOneText, optionTwoText } = this.props
+    const { loggedIn, authedUser } = this.props
+    const { optionOneText, optionTwoText } = this.state
 
     if (loggedIn === false || authedUser === null) {
       return <Redirect to='/login' />
+    }
+
+    if (this.state.submitted === true) {
+      return <Redirect to='/unanswered-questions' />
     }
 
     return (
@@ -72,7 +79,7 @@ class CreatePoll extends Component {
           <button
             className='btn'
             type='submit'
-            disabled={optionOneText === undefined || optionTwoText === undefined || optionOneText.length < 1 || optionTwoText.length < 1}>
+            disabled={optionOneText === undefined || optionTwoText === undefined || optionOneText.length === 0 || optionTwoText.length === 0}>
               Submit
           </button>
         </form>

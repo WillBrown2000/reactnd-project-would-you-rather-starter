@@ -171,5 +171,23 @@ li {
   color: #C3392A;
 }
 .extra-padding {
-  padding: 50px;
+  padding: 10px;
+}
+.votes {
+    width: 100px;
+    float: left;
+    height: 50px;
+}
+.percentage {
+    width: 100px;
+    float: left;
+    height: 50px;
+}
+.user-answer {
+    width: 100px;
+    float: right;
+    height: 50px;
+}
+.question {
+    position: absolute;
 }
