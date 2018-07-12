@@ -77,7 +77,7 @@ class QuestionDetails extends Component {
                 : <div></div>
                 )}
               <div className='votes'> Votes: {optionOneVotes} </div>
-              <div className='percentage'> Percentage: {optionOneVotes/(optionOneVotes + optionTwoVotes) * 100}% </div>
+              <div className='percentage'> Percentage: {Math.round((optionOneVotes/(optionOneVotes + optionTwoVotes) * 100))}% </div>
             </div>
             <div className='poll-question'>
               <div onClick={this.handleOptionTwoClick}>{optionTwo.text}?</div>
@@ -86,7 +86,7 @@ class QuestionDetails extends Component {
                 : <div></div>
                 )}
               <div className='votes'> Votes: {optionTwoVotes} </div>
-              <div className='percentage'> Percentage: {optionTwoVotes/(optionOneVotes + optionTwoVotes) * 100}% </div>
+              <div className='percentage'> Percentage: {Math.round((optionTwoVotes/(optionOneVotes + optionTwoVotes) * 100))}% </div>
             </div>
           </div>
         </div>
